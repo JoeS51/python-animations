@@ -1,0 +1,6 @@
+00.0-03.5  Your database says commit.
+03.5-06.5  Then the power dies before the change reaches the data file.
+06.5-09.0  So why isn't the transaction lost?
+09.0-14.8  Before acknowledging commit, the database writes the change to a durable write-ahead log.
+14.8-17.8  After a crash, it replays that log and restores the data.
+17.8-20.0  Record first. Apply later.

@@ -6,6 +6,8 @@
     "studio": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts WALShort out/wal-short.mp4",
     "render:database": "remotion render src/index.ts DatabaseBasics out/database-basics.mp4",
+    "render:opensource": "remotion render src/index.ts OpenSourceFirst out/open-source-first.mp4",
+    "render:rust": "remotion render src/index.ts RustNoGc out/rust-no-gc.mp4",
     "check": "tsc --noEmit"
   },
   "dependencies": {

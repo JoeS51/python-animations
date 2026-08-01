@@ -5,6 +5,7 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts WALShort out/wal-short.mp4",
+    "render:database": "remotion render src/index.ts DatabaseBasics out/database-basics.mp4",
     "check": "tsc --noEmit"
   },
   "dependencies": {

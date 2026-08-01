@@ -5,9 +5,7 @@ import {
   Easing,
   Sequence,
   interpolate,
-  spring,
   useCurrentFrame,
-  useVideoConfig,
 } from 'remotion';
 import '@fontsource-variable/inter';
 import '@fontsource/caveat/600.css';
@@ -304,10 +302,9 @@ const Wal: React.FC<{progress?: number; active?: number; style?: React.CSSProper
 
 const HookScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const txIn = spring({frame: frame - 16, fps, config: {damping: 18, stiffness: 180}});
-  const dbIn = spring({frame: frame - 32, fps, config: {damping: 18, stiffness: 160}});
-  const ackIn = spring({frame: frame - 51, fps, config: {damping: 13, stiffness: 220}});
+  const txIn = reveal(frame, 16, 12);
+  const dbIn = reveal(frame, 32, 12);
+  const ackIn = reveal(frame, 51, 9);
 
   return (
     <Frame chapter="01 / THE PROMISE">
@@ -325,7 +322,15 @@ const HookScene: React.FC = () => {
       >
         COMMIT.
       </div>
-      <div style={{position: 'absolute', top: 630, left: 190, transform: `scale(${txIn})`}}>
+      <div
+        style={{
+          position: 'absolute',
+          top: 630,
+          left: 190,
+          opacity: txIn,
+          transform: `translateY(${interpolate(txIn, [0, 1], [36, 0])}px)`,
+        }}
+      >
         <Transaction progress={txIn} />
       </div>
       <RoughArrow
@@ -337,7 +342,13 @@ const HookScene: React.FC = () => {
       />
       <Database
         progress={dbIn}
-        style={{position: 'absolute', top: 925, left: 320, transform: `scale(${dbIn})`}}
+        style={{
+          position: 'absolute',
+          top: 925,
+          left: 320,
+          opacity: dbIn,
+          transform: `translateY(${interpolate(dbIn, [0, 1], [28, 0])}px)`,
+        }}
       />
       <div
         style={{
@@ -354,7 +365,8 @@ const HookScene: React.FC = () => {
           fontSize: 24,
           fontWeight: 850,
           letterSpacing: 3,
-          transform: `scaleX(${ackIn}) rotate(-1deg)`,
+          clipPath: `inset(0 ${(1 - ackIn) * 100}% 0 0)`,
+          transform: 'rotate(-1deg)',
         }}
       >
         ACKNOWLEDGED ✓
@@ -492,7 +504,7 @@ const WalScene: React.FC = () => {
   const arrowOne = reveal(frame, 35, 13);
   const walIn = reveal(frame, 45, 12);
   const active = frame < 68 ? 0 : frame < 82 ? 1 : frame < 96 ? 2 : 3;
-  const ack = spring({frame: frame - 102, fps: 30, config: {damping: 14, stiffness: 220}});
+  const ack = reveal(frame, 102, 9);
 
   return (
     <Frame chapter="04 / WRITE AHEAD">
@@ -563,7 +575,8 @@ const WalScene: React.FC = () => {
           fontSize: 25,
           fontWeight: 850,
           letterSpacing: 3,
-          transform: `scaleX(${ack}) rotate(1deg)`,
+          clipPath: `inset(0 ${(1 - ack) * 100}% 0 0)`,
+          transform: 'rotate(1deg)',
         }}
       >
         2. ACK COMMIT
@@ -581,7 +594,7 @@ const WalScene: React.FC = () => {
 const RecoveryScene: React.FC = () => {
   const frame = useCurrentFrame();
   const replay = reveal(frame, 25, 22);
-  const restored = spring({frame: frame - 55, fps: 30, config: {damping: 12, stiffness: 200}});
+  const restored = reveal(frame, 55, 10);
   const packetY = interpolate(frame, [24, 49], [0, 305], clamp);
 
   return (
@@ -624,7 +637,7 @@ const RecoveryScene: React.FC = () => {
       ))}
       <Database
         progress={replay}
-        style={{position: 'absolute', top: 1050, left: 320, transform: `scale(${0.9 + restored * 0.1})`}}
+        style={{position: 'absolute', top: 1050, left: 320}}
         seed={211}
       />
       <div
@@ -642,7 +655,8 @@ const RecoveryScene: React.FC = () => {
           fontSize: 25,
           fontWeight: 850,
           letterSpacing: 3,
-          transform: `scaleX(${restored}) rotate(-1deg)`,
+          clipPath: `inset(0 ${(1 - restored) * 100}% 0 0)`,
+          transform: 'rotate(-1deg)',
         }}
       >
         DATA RESTORED
@@ -666,7 +680,7 @@ const RecoveryScene: React.FC = () => {
 
 const SummaryScene: React.FC = () => {
   const frame = useCurrentFrame();
-  const scale = spring({frame, fps: 30, config: {damping: 16, stiffness: 180}});
+  const titleIn = reveal(frame, 0, 12);
   return (
     <Frame chapter="06 / THE IDEA">
       <div
@@ -678,7 +692,8 @@ const SummaryScene: React.FC = () => {
           fontSize: 210,
           fontWeight: 900,
           letterSpacing: -14,
-          transform: `scale(${scale})`,
+          clipPath: `inset(0 ${(1 - titleIn) * 100}% 0 0)`,
+          transform: `translateY(${interpolate(titleIn, [0, 1], [32, 0])}px)`,
         }}
       >
         WAL

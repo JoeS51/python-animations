@@ -5,7 +5,12 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts AssemblyIntro out/assembly-intro.mp4",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "render:1-layers": "remotion render src/index.ts AssemblyIntro out/1-layers.mp4 --frames=0-989",
+    "render:2-cpu": "remotion render src/index.ts AssemblyIntro out/2-cpu.mp4 --frames=990-1769",
+    "render:3-execute": "remotion render src/index.ts AssemblyIntro out/3-execute.mp4 --frames=1770-3404",
+    "render:4-wrap": "remotion render src/index.ts AssemblyIntro out/4-wrap.mp4 --frames=3405-3719",
+    "render:clips": "npm run render:1-layers && npm run render:2-cpu && npm run render:3-execute && npm run render:4-wrap"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

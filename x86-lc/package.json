@@ -5,6 +5,7 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts AssemblyIntro out/assembly-intro.mp4",
+    "render:subway": "scripts/subway-gag.sh",
     "check": "tsc --noEmit"
   },
   "dependencies": {

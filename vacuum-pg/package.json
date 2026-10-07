@@ -1,0 +1,28 @@
+{
+  "name": "vacuum-pg",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts VacuumIntro out/vacuum-intro.mp4",
+    "check": "tsc --noEmit",
+    "render:1-mvcc": "remotion render src/index.ts VacuumIntro out/1-mvcc.mp4 --frames=0-305",
+    "render:2-bloat": "remotion render src/index.ts VacuumIntro out/2-bloat.mp4 --frames=306-557",
+    "render:3-vacuum": "remotion render src/index.ts VacuumIntro out/3-vacuum.mp4 --frames=558-779",
+    "render:4-wrap": "remotion render src/index.ts VacuumIntro out/4-wrap.mp4 --frames=780-899",
+    "render:clips": "npm run render:1-mvcc && npm run render:2-bloat && npm run render:3-vacuum && npm run render:4-wrap"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.6",
+    "@remotion/cli": "^4.0.499",
+    "remotion": "^4.0.499",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "typescript": "^5.8.3"
+  }
+}
